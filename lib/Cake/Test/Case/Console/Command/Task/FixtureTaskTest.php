@@ -42,7 +42,7 @@ class FixtureTaskTest extends CakeTestCase {
 /**
  * Whether backup global state for each test method or not
  *
- * @var bool
+ * @var boolean
  */
 	public $backupGlobals = false;
 
@@ -245,6 +245,7 @@ class FixtureTaskTest extends CakeTestCase {
 /**
  * test that execute passes runs bake depending with named model.
  *
+ *
  * @return void
  */
 	public function testExecuteWithNamedModel() {
@@ -426,8 +427,9 @@ class FixtureTaskTest extends CakeTestCase {
 		$this->Task->expects($this->at(1))->method('createFile')
 			->with($filename, $this->stringContains('<?php'));
 
-		$this->Task->generateFixtureFile('Article', array());
-		$this->Task->generateFixtureFile('Article', array());
+		$result = $this->Task->generateFixtureFile('Article', array());
+
+		$result = $this->Task->generateFixtureFile('Article', array());
 	}
 
 /**

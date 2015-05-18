@@ -23,8 +23,7 @@ App::uses('View', 'View');
 /**
  * ScaffoldView provides specific view file loading features for scaffolded views.
  *
- * @package Cake.View
- * @deprecated 3.0.0 Dynamic scaffolding will be removed and replaced in 3.0
+ * @package       Cake.View
  */
 class ScaffoldView extends View {
 

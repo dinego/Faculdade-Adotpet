@@ -19,6 +19,7 @@
  */
 
 /**
+ *
  * Using the Schema command line utility
  *
  * Use it to configure database for i18n
@@ -29,22 +30,10 @@ class I18nSchema extends CakeSchema {
 
 	public $name = 'i18n';
 
-/**
- * Before callback.
- *
- * @param array $event Schema object properties
- * @return bool Should process continue
- */
 	public function before($event = array()) {
 		return true;
 	}
 
-/**
- * After callback.
- *
- * @param array $event Schema object properties
- * @return void
- */
 	public function after($event = array()) {
 	}
 

@@ -124,20 +124,27 @@ class CakeLogTest extends CakeTestCase {
 	}
 
 /**
- * Test that CakeLog does not auto create logs when no streams are there to listen.
+ * Test that CakeLog autoconfigures itself to use a FileLogger with the LOGS dir.
+ * When no streams are there.
  *
  * @return void
  */
-	public function testNoStreamListenting() {
+	public function testAutoConfig() {
 		if (file_exists(LOGS . 'error.log')) {
 			unlink(LOGS . 'error.log');
 		}
-		$res = CakeLog::write(LOG_WARNING, 'Test warning');
-		$this->assertFalse($res);
-		$this->assertFalse(file_exists(LOGS . 'error.log'));
+		CakeLog::write(LOG_WARNING, 'Test warning');
+		$this->assertTrue(file_exists(LOGS . 'error.log'));
 
 		$result = CakeLog::configured();
-		$this->assertEquals(array(), $result);
+		$this->assertEquals(array('default'), $result);
+
+		$testMessage = 'custom message';
+		CakeLog::write('custom', $testMessage);
+		$content = file_get_contents(LOGS . 'custom.log');
+		$this->assertContains($testMessage, $content);
+		unlink(LOGS . 'error.log');
+		unlink(LOGS . 'custom.log');
 	}
 
 /**
@@ -188,10 +195,6 @@ class CakeLogTest extends CakeTestCase {
  * @return void
  */
 	public function testLogFileWriting() {
-		CakeLog::config('file', array(
-			'engine' => 'File',
-			'path' => LOGS
-		));
 		if (file_exists(LOGS . 'error.log')) {
 			unlink(LOGS . 'error.log');
 		}
@@ -257,7 +260,6 @@ class CakeLogTest extends CakeTestCase {
  * test enable
  *
  * @expectedException CakeLogException
- * @return void
  */
 	public function testStreamEnable() {
 		CakeLog::config('spam', array(
@@ -273,7 +275,6 @@ class CakeLogTest extends CakeTestCase {
  * test disable
  *
  * @expectedException CakeLogException
- * @return void
  */
 	public function testStreamDisable() {
 		CakeLog::config('spam', array(
@@ -291,7 +292,6 @@ class CakeLogTest extends CakeTestCase {
  * test enabled() invalid stream
  *
  * @expectedException CakeLogException
- * @return void
  */
 	public function testStreamEnabledInvalid() {
 		CakeLog::enabled('bogus_stream');
@@ -301,17 +301,11 @@ class CakeLogTest extends CakeTestCase {
  * test disable invalid stream
  *
  * @expectedException CakeLogException
- * @return void
  */
 	public function testStreamDisableInvalid() {
 		CakeLog::disable('bogus_stream');
 	}
 
-/**
- * resets log config
- *
- * @return void
- */
 	protected function _resetLogConfig() {
 		CakeLog::config('debug', array(
 			'engine' => 'File',
@@ -325,11 +319,6 @@ class CakeLogTest extends CakeTestCase {
 		));
 	}
 
-/**
- * delete logs
- *
- * @return void
- */
 	protected function _deleteLogs() {
 		if (file_exists(LOGS . 'shops.log')) {
 			unlink(LOGS . 'shops.log');
@@ -507,16 +496,10 @@ class CakeLogTest extends CakeTestCase {
 /**
  * test bogus type and scope
  *
- * @return void
  */
 	public function testBogusTypeAndScope() {
 		$this->_resetLogConfig();
 		$this->_deleteLogs();
-
-		CakeLog::config('file', array(
-			'engine' => 'File',
-			'path' => LOGS
-		));
 
 		CakeLog::write('bogus', 'bogus message');
 		$this->assertTrue(file_exists(LOGS . 'bogus.log'));
@@ -539,8 +522,6 @@ class CakeLogTest extends CakeTestCase {
 
 /**
  * test scoped logging with convenience methods
- *
- * @return void
  */
 	public function testConvenienceScopedLogging() {
 		if (file_exists(LOGS . 'shops.log')) {
@@ -587,8 +568,6 @@ class CakeLogTest extends CakeTestCase {
 
 /**
  * test convenience methods
- *
- * @return void
  */
 	public function testConvenienceMethods() {
 		$this->_deleteLogs();
@@ -663,8 +642,6 @@ class CakeLogTest extends CakeTestCase {
 
 /**
  * test levels customization
- *
- * @return void
  */
 	public function testLevelCustomization() {
 		$this->skipIf(DIRECTORY_SEPARATOR === '\\', 'Log level tests not supported on Windows.');
@@ -695,8 +672,6 @@ class CakeLogTest extends CakeTestCase {
 
 /**
  * Test writing log files with custom levels
- *
- * @return void
  */
 	public function testCustomLevelWrites() {
 		$this->_deleteLogs();

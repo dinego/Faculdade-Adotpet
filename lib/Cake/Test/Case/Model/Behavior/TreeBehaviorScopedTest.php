@@ -33,7 +33,7 @@ class TreeBehaviorScopedTest extends CakeTestCase {
 /**
  * Whether backup global state for each test method or not
  *
- * @var bool
+ * @var boolean
  */
 	public $backupGlobals = false;
 
@@ -128,29 +128,6 @@ class TreeBehaviorScopedTest extends CakeTestCase {
 
 		$this->assertTrue($this->Tree->delete());
 		$this->assertEquals(11, $this->Tree->find('count'));
-	}
-
-/**
- * testSaveWithParentAndInvalidScope method
- *
- * Attempting to save an invalid data should not trigger an `Undefined offset`
- * error
- *
- * @return void
- */
-	public function testSaveWithParentAndInvalidScope() {
-		$this->Tree = new FlagTree();
-		$this->Tree->order = null;
-		$data = $this->Tree->create(array(
-			'name' => 'Flag',
-		));
-		$tree = $this->Tree->save($data);
-		$this->Tree->Behaviors->load('Tree', array(
-			'scope' => array('FlagTree.flag' => 100)
-		));
-		$tree['FlagTree']['parent_id'] = 1;
-		$result = $this->Tree->save($tree);
-		$this->assertFalse($result);
 	}
 
 /**
@@ -438,7 +415,7 @@ class TreeBehaviorScopedTest extends CakeTestCase {
 		$this->Tree->Behaviors->enable('Tree');
 
 		$result = $this->Tree->verify();
-		$this->assertNotSame(true, $result);
+		$this->assertNotSame($result, true);
 
 		$result = $this->Tree->recover();
 		$this->assertTrue($result);
@@ -485,7 +462,7 @@ class TreeBehaviorScopedTest extends CakeTestCase {
 		$this->Tree->updateAll(array($parentField => 999999), array('id' => $result[$modelClass]['id']));
 
 		$result = $this->Tree->verify();
-		$this->assertNotSame(true, $result);
+		$this->assertNotSame($result, true);
 
 		$result = $this->Tree->recover();
 		$this->assertTrue($result);
@@ -515,7 +492,7 @@ class TreeBehaviorScopedTest extends CakeTestCase {
 		$this->Tree->updateAll(array($parentField => null));
 
 		$result = $this->Tree->verify();
-		$this->assertNotSame(true, $result);
+		$this->assertNotSame($result, true);
 
 		$result = $this->Tree->recover();
 		$this->assertTrue($result);
@@ -545,7 +522,7 @@ class TreeBehaviorScopedTest extends CakeTestCase {
 		$this->Tree->updateAll(array($leftField => 0, $rightField => 0));
 
 		$result = $this->Tree->verify();
-		$this->assertNotSame(true, $result);
+		$this->assertNotSame($result, true);
 
 		$this->Tree->recover();
 
@@ -579,7 +556,7 @@ class TreeBehaviorScopedTest extends CakeTestCase {
 			array($rightField . ' >' => $result[$modelClass][$leftField]));
 
 		$result = $this->Tree->verify();
-		$this->assertNotSame(true, $result);
+		$this->assertNotSame($result, true);
 
 		$result = $this->Tree->recover();
 		$this->assertTrue($result);

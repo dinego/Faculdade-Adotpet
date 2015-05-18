@@ -29,7 +29,7 @@ class FileTest extends CakeTestCase {
 /**
  * File property
  *
- * @var mixed
+ * @var mixed null
  */
 	public $File = null;
 
@@ -81,7 +81,8 @@ class FileTest extends CakeTestCase {
 			'filesize' => filesize($file),
 			'mime' => 'text/plain'
 		);
-		if (!function_exists('finfo_open') &&
+		if (
+			!function_exists('finfo_open') &&
 			(!function_exists('mime_content_type') ||
 			function_exists('mime_content_type') &&
 			mime_content_type($this->File->pwd()) === false)
@@ -124,8 +125,6 @@ class FileTest extends CakeTestCase {
 
 /**
  * testPermission method
- *
- * @return void
  */
 	public function testPermission() {
 		$this->skipIf(DIRECTORY_SEPARATOR === '\\', 'File permissions tests not supported on Windows.');
@@ -533,7 +532,7 @@ class FileTest extends CakeTestCase {
 		$path = CAKE . 'Test' . DS . 'test_app' . DS . 'webroot' . DS . 'img' . DS . 'cake.power.gif';
 		$file = new File($path);
 		$expected = 'image/gif';
-		if (function_exists('mime_content_type') && mime_content_type($file->pwd()) === false) {
+		if (function_exists('mime_content_type') && false === mime_content_type($file->pwd())) {
 			$expected = false;
 		}
 		$this->assertEquals($expected, $file->mime());
@@ -542,14 +541,14 @@ class FileTest extends CakeTestCase {
 /**
  * getTmpFile method
  *
- * @param bool $paintSkip
+ * @param boolean $paintSkip
  * @return void
  */
 	protected function _getTmpFile($paintSkip = true) {
 		$tmpFile = TMP . 'tests' . DS . 'cakephp.file.test.tmp';
 		if (is_writable(dirname($tmpFile)) && (!file_exists($tmpFile) || is_writable($tmpFile))) {
 			return $tmpFile;
-		}
+		};
 
 		if ($paintSkip) {
 			$trace = debug_backtrace();
@@ -560,53 +559,5 @@ class FileTest extends CakeTestCase {
 			$this->markTestSkipped($message);
 		}
 		return false;
-	}
-
-/**
- * testReplaceText method
- *
- * @return void
- */
-	public function testReplaceText() {
-		$TestFile = new File(dirname(__FILE__) . '/../../test_app/Vendor/welcome.php');
-		$TmpFile = new File(TMP . 'tests' . DS . 'cakephp.file.test.tmp');
-
-		// Copy the test file to the temporary location
-		$TestFile->copy($TmpFile->path, true);
-
-		// Replace the contents of the tempory file
-		$result = $TmpFile->replaceText('welcome.php', 'welcome.tmp');
-		$this->assertTrue($result);
-
-		// Double check
-		$expected = 'This is the welcome.tmp file in vendors directory';
-		$contents = $TmpFile->read();
-		$this->assertContains($expected, $contents);
-
-		$search = array('This is the', 'welcome.php file', 'in tmp directory');
-		$replace = array('This should be a', 'welcome.tmp file', 'in the Lib directory');
-
-		// Replace the contents of the tempory file
-		$result = $TmpFile->replaceText($search, $replace);
-		$this->assertTrue($result);
-
-		// Double check
-		$expected = 'This should be a welcome.tmp file in vendors directory';
-		$contents = $TmpFile->read();
-		$this->assertContains($expected, $contents);
-
-		$TmpFile->delete();
-	}
-
-/**
- * Tests that no path is being set for passed file paths that
- * do not exist.
- *
- * @return void
- */
-	public function testNoPartialPathBeingSetForNonExistentPath() {
-		$tmpFile = new File('/non/existent/file');
-		$this->assertNull($tmpFile->pwd());
-		$this->assertNull($tmpFile->path);
 	}
 }

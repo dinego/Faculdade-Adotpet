@@ -2423,3 +2423,23 @@ a.hvr-bounce-to-left:active:before {
         font-size: 13px;
     }
 }
+.top-menu span.entrar {
+    background: #4278C0;
+    padding: 8px;
+    color: #fff;
+    border-radius: 3px;
+    border-bottom: 3px solid #005996;
+    font-weight: 600;
+    position: relative;
+    top: -6px;
+    display: inline-block;
+    line-height: 0.8em;
+    margin: 0 0 0 20px;
+}
+.top-menu span.entrar:hover {
+    background: #4070B0;
+}
+.top-menu span.entrar a , .top-menu span.entrar a:hover {
+    font-size: 14px;
+    color: #fff
+}

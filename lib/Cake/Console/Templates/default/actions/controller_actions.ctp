@@ -135,7 +135,7 @@
 		if (!$this-><?php echo $currentModelName; ?>->exists()) {
 			throw new NotFoundException(__('Invalid <?php echo strtolower($singularHumanName); ?>'));
 		}
-		$this->request->allowMethod('post', 'delete');
+		$this->request->onlyAllow('post', 'delete');
 		if ($this-><?php echo $currentModelName; ?>->delete()) {
 <?php if ($wannaUseSession): ?>
 			$this->Session->setFlash(__('The <?php echo strtolower($singularHumanName); ?> has been deleted.'));

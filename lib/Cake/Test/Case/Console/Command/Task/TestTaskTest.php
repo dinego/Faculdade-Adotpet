@@ -413,8 +413,6 @@ class TestTaskTest extends CakeTestCase {
 
 		$this->assertContains('function testDoSomething()', $result);
 		$this->assertContains('function testDoSomethingElse()', $result);
-		$this->assertContains('$this->markTestIncomplete(\'testDoSomething not implemented.\')', $result);
-		$this->assertContains('$this->markTestIncomplete(\'testDoSomethingElse not implemented.\')', $result);
 
 		$this->assertContains("'app.test_task_article'", $result);
 		$this->assertContains("'app.test_task_comment'", $result);
@@ -534,8 +532,6 @@ class TestTaskTest extends CakeTestCase {
 
 /**
  * Test generateUses()
- *
- * @return void
  */
 	public function testGenerateUses() {
 		$result = $this->Task->generateUses('model', 'Model', 'Post');

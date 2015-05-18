@@ -1,5 +1,7 @@
 <?php
 /**
+ *
+ *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -29,7 +31,7 @@ class CakeEventManager {
 /**
  * The default priority queue value for new, attached listeners
  *
- * @var int
+ * @var integer
  */
 	public static $defaultPriority = 10;
 
@@ -43,14 +45,14 @@ class CakeEventManager {
 /**
  * List of listener callbacks associated to
  *
- * @var object
+ * @var object $Listeners
  */
 	protected $_listeners = array();
 
 /**
  * Internal flag to distinguish a common manager from the singleton
  *
- * @var bool
+ * @var boolean
  */
 	protected $_isGlobal = false;
 
@@ -62,7 +64,7 @@ class CakeEventManager {
  *
  * If called with the first parameter, it will be set as the globally available instance
  *
- * @param CakeEventManager $manager Optional event manager instance.
+ * @param CakeEventManager $manager
  * @return CakeEventManager the global event manager
  */
 	public static function instance($manager = null) {
@@ -116,7 +118,7 @@ class CakeEventManager {
  * Auxiliary function to attach all implemented callbacks of a CakeEventListener class instance
  * as individual methods on this manager
  *
- * @param CakeEventListener $subscriber Event listener.
+ * @param CakeEventListener $subscriber
  * @return void
  */
 	protected function _attachSubscriber(CakeEventListener $subscriber) {
@@ -220,20 +222,22 @@ class CakeEventManager {
  * Dispatches a new event to all configured listeners
  *
  * @param string|CakeEvent $event the event key name or instance of CakeEvent
- * @return CakeEvent
- * @triggers $event
+ * @return void
  */
 	public function dispatch($event) {
 		if (is_string($event)) {
 			$event = new CakeEvent($event);
 		}
 
-		$listeners = $this->listeners($event->name());
-		if (empty($listeners)) {
-			return $event;
+		if (!$this->_isGlobal) {
+			self::instance()->dispatch($event);
 		}
 
-		foreach ($listeners as $listener) {
+		if (empty($this->_listeners[$event->name()])) {
+			return;
+		}
+
+		foreach ($this->listeners($event->name()) as $listener) {
 			if ($event->isStopped()) {
 				break;
 			}
@@ -249,51 +253,24 @@ class CakeEventManager {
 				$event->result = $result;
 			}
 		}
-		return $event;
 	}
 
 /**
  * Returns a list of all listeners for an eventKey in the order they should be called
  *
- * @param string $eventKey Event key.
+ * @param string $eventKey
  * @return array
  */
 	public function listeners($eventKey) {
-		$localListeners = array();
-		$priorities = array();
-		if (!$this->_isGlobal) {
-			$localListeners = $this->prioritisedListeners($eventKey);
-			$localListeners = empty($localListeners) ? array() : $localListeners;
+		if (empty($this->_listeners[$eventKey])) {
+			return array();
 		}
-		$globalListeners = self::instance()->prioritisedListeners($eventKey);
-		$globalListeners = empty($globalListeners) ? array() : $globalListeners;
-
-		$priorities = array_merge(array_keys($globalListeners), array_keys($localListeners));
-		$priorities = array_unique($priorities);
-		asort($priorities);
-
+		ksort($this->_listeners[$eventKey]);
 		$result = array();
-		foreach ($priorities as $priority) {
-			if (isset($globalListeners[$priority])) {
-				$result = array_merge($result, $globalListeners[$priority]);
-			}
-			if (isset($localListeners[$priority])) {
-				$result = array_merge($result, $localListeners[$priority]);
-			}
+		foreach ($this->_listeners[$eventKey] as $priorityQ) {
+			$result = array_merge($result, $priorityQ);
 		}
 		return $result;
 	}
 
-/**
- * Returns the listeners for the specified event key indexed by priority
- *
- * @param string $eventKey Event key.
- * @return array
- */
-	public function prioritisedListeners($eventKey) {
-		if (empty($this->_listeners[$eventKey])) {
-			return array();
-		}
-		return $this->_listeners[$eventKey];
-	}
 }

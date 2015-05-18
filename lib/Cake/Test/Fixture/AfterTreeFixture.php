@@ -18,7 +18,7 @@
  */
 
 /**
- * AfterTreeFixture class
+ * AdFixture class
  *
  * @package       Cake.Test.Fixture
  */

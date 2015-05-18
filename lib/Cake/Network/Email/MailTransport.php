@@ -67,15 +67,11 @@ class MailTransport extends AbstractTransport {
 		if (ini_get('safe_mode')) {
 			//@codingStandardsIgnoreStart
 			if (!@mail($to, $subject, $message, $headers)) {
-				$error = error_get_last();
-				$msg = 'Could not send email: ' . isset($error['message']) ? $error['message'] : 'unknown';
-				throw new SocketException($msg);
+				throw new SocketException(__d('cake_dev', 'Could not send email.'));
 			}
 		} elseif (!@mail($to, $subject, $message, $headers, $params)) {
-			$error = error_get_last();
-			$msg = 'Could not send email: ' . isset($error['message']) ? $error['message'] : 'unknown';
 			//@codingStandardsIgnoreEnd
-			throw new SocketException($msg);
+			throw new SocketException(__d('cake_dev', 'Could not send email.'));
 		}
 	}
 

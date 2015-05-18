@@ -70,15 +70,15 @@ class AclComponentTest extends CakeTestCase {
  * @return void
  */
 	public function testAdapter() {
-		$Adapter = $this->getMock('AclInterface');
-		$Adapter->expects($this->once())->method('initialize')->with($this->Acl);
+		$implementation = new MockAclImplementation();
+		$implementation->expects($this->once())->method('initialize')->with($this->Acl);
+		$this->assertNull($this->Acl->adapter($implementation));
 
-		$this->assertNull($this->Acl->adapter($Adapter));
-		$this->assertEquals($this->Acl->adapter(), $Adapter, 'Returned object is different %s');
+		$this->assertEquals($this->Acl->adapter(), $implementation, 'Returned object is different %s');
 	}
 
 /**
- * test that adapter() whines when the class does not implement AclInterface
+ * test that adapter() whines when the class is not an AclBase
  *
  * @expectedException CakeException
  * @return void

@@ -258,7 +258,6 @@ class ConsoleOptionParserTest extends CakeTestCase {
  * test parsing options that do not exist.
  *
  * @expectedException ConsoleException
- * @return void
  */
 	public function testOptionThatDoesNotExist() {
 		$parser = new ConsoleOptionParser('test', false);
@@ -271,7 +270,6 @@ class ConsoleOptionParserTest extends CakeTestCase {
  * test parsing short options that do not exist.
  *
  * @expectedException ConsoleException
- * @return void
  */
 	public function testShortOptionThatDoesNotExist() {
 		$parser = new ConsoleOptionParser('test', false);
@@ -474,21 +472,6 @@ class ConsoleOptionParserTest extends CakeTestCase {
 		$result = $parser->subcommands();
 		$this->assertEquals(1, count($result));
 		$this->assertEquals('test', $result['test']->name());
-	}
-
-/**
- * test removeSubcommand with an object.
- *
- * @return void
- */
-	public function testRemoveSubcommand() {
-		$parser = new ConsoleOptionParser('test', false);
-		$parser->addSubcommand(new ConsoleInputSubcommand('test'));
-		$result = $parser->subcommands();
-		$this->assertEquals(1, count($result));
-		$parser->removeSubcommand('test');
-		$result = $parser->subcommands();
-		$this->assertEquals(0, count($result), 'Remove a subcommand does not work');
 	}
 
 /**

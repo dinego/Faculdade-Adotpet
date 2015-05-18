@@ -78,8 +78,6 @@ class TimeHelperTest extends CakeTestCase {
 
 /**
  * test CakeTime class methods are called correctly
- *
- * @return void
  */
 	public function testTimeHelperProxyMethodCalls() {
 		$methods = array(
@@ -106,8 +104,6 @@ class TimeHelperTest extends CakeTestCase {
 
 /**
  * test engine override
- *
- * @return void
  */
 	public function testEngineOverride() {
 		App::build(array(
@@ -175,7 +171,7 @@ class TimeHelperTest extends CakeTestCase {
 				'title' => $timestamp,
 				'class' => 'time-ago-in-words'
 			),
-			'in 2 weeks',
+			'2 weeks',
 			'/div'
 		);
 		$this->assertTags($result, $expected);

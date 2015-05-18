@@ -1,5 +1,7 @@
 <?php
 /**
+ *
+ *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -28,7 +30,7 @@ interface CakeEventListener {
  *
  * ## Example:
  *
- * ```
+ * {{{
  *	public function implementedEvents() {
  *		return array(
  *			'Order.complete' => 'sendEmail',
@@ -36,7 +38,7 @@ interface CakeEventListener {
  *			'User.onRegister' => array('callable' => 'logRegistration', 'priority' => 20, 'passParams' => true)
  *		);
  *	}
- * ```
+ * }}}
  *
  * @return array associative array or event key names pointing to the function
  * that should be called in the object when the respective event is fired

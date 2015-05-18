@@ -1,191 +1,490 @@
 <!DOCTYPE html>
-<html>
-<head>
-<title>ADOTPET - Adote animais e dê-os um lar e muito amor </title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="keywords" content="" />
-<meta name="description" content="" />
+<html lang="pt-br">
+<head> 
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="ThemeBucket">
+    <link rel="shortcut icon" href="images/favicon.html">
+    <title>NFCHURCH - Gestão de Igrejas</title>
+    <!--Core CSS -->
+    <?php 
+        //array com os cores css
+    echo $this->Html->css(array(
+        'bootstrap', 
+        'assets/jquery-ui/jquery-ui-1.10.1.custom.min', 
+        'bootstrap-reset', 
+        'assets/font-awesome/css/font-awesome', 
+        'assets/jvector-map/jquery-jvectormap-1.2.2', 
+        'clndr',
+        'assets/morris-chart/morris.css',
+        'style',
+        'style-responsive.css',
+        'assets/fullcalendar/fullcalendar/bootstrap-fullcalendar.css',
+        'select2',
+        'multi-select',
+        'nfchurch'
+        ));
 
-<?php echo $this->Html->css(array('bootstrap', 'animate', 'font-awesome.min', 'style')); ?>
-<?php echo $this->Html->script(array('jquery.min', 'move-top', 'easing', 'responsiveslides.min')); ?>
+    echo $this->Html->css('assets/css3clock/css/style');
+        //Morris Chart CSS
+    echo $this->Html->css('assets/morris-chart/morris');
 
-<!-- Google font -->
-<link href='http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+    echo $this->Html->script(array('lib/jquery-1.11.1.min.js'));
 
- 	<script>
-		$(function () {
-	  		$("#slider").responsiveSlides({
-			  	auto: true,
-			  	speed: 500,
-				namespace: "callbacks",
-				pager: true,
-		  	});
-		});
-  	</script>
+    echo $this->Html->css(array(
+        'assets/bootstrap-switch-master/build/css/bootstrap3/bootstrap-switch.css',
+        'assets/bootstrap-fileupload/bootstrap-fileupload.css',
+        'assets/bootstrap-wysihtml5/bootstrap-wysihtml5.css',
+        'assets/bootstrap-datepicker/css/datepicker.css',
+        'assets/bootstrap-timepicker/compiled/timepicker.css',
+        'assets/bootstrap-daterangepicker/daterangepicker-bs3.css',
+        'assets/bootstrap-datetimepicker/css/datetimepicker.css',
+        'assets/jquery-multi-select/css/multi-select.css',
+        'assets/jquery-tags-input/jquery.tagsinput.css',
+        'assets/bootstrap-colorpicker/css/colorpicker.css',
+        'pace.css',
+    ));
+    ?>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="js/ie8/ie8-responsive-file-warning.js"></script><![endif]-->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+        //var urlApagaRegChecked = 'eae';
+        var urlApagaRegChecked = "<?php echo $this->Html->url(array('plugin' => 'secretaria', 'controller' => 'visitantes', 'action' => 'delete')); ?>";
+    </script>
+
 </head>
-
 <body>
-	<!-- header -->
-	<div class="header">
-		<div class="header-top">
-			<div class="container">
-				<p class="social-media">
-					<a href="#"><i class="fa fa-facebook"></i></a>
-					<a href="#"><i class="fa fa-twitter"></i></a>
-				</p>
-				<p class="phonenum">Atendimento: 0800-9999-999</p>
-				<div class="clearfix"></div>
-			</div>
-		</div>
-		<div class="header-bottom">
-			<div class="container">
-				<div class="logo">
-					<a href="index.html"><?php echo $this->Html->image('logo.png'); ?></a>
-				</div>
-				<span class="menu"></span>
-				<div class="top-menu">
-					<ul>
-					<nav class="cl-effect-5">
-						<li><a class="active" href="index.html"><span data-hover="Home">Home</span></a></li>
-						<li><a href="sobre.html"><span data-hover="Sobre">Sobre</span></a></li>
-						<li><a href="blog.html"><span data-hover="Blog">Blog</span></a></li>
-						<li><a href="contato.html"><span data-hover="Contato">Contato</span></a></li>
-					</nav>
-					</ul>
-				</div>
-				<!-- script for menu -->
-				<script>
-				$( "span.menu" ).click(function() {
-				  $( ".top-menu" ).slideToggle( "slow", function() {
-					// Animation complete.
-				  });
-				});
-			</script>
-			<!-- script for menu -->
-				<div class="clearfix"></div>
-			</div>
-		</div>
-	</div>
-	<!-- banner -->
-	<div class="banner">
-	<div class="slider">
-		  <div class="callbacks_container">
-			  <ul class="rslides" id="slider">
-				 <li>
-				 	<?php echo $this->Html->image('banner-principal.jpg'); ?>
-					  <div class="caption">
-						<h2>Para que pagar caro em padrões de raça com tantos animais de graça?</h2>
-						  <div class="login-form">
+    <section id="container">
+        <!--header start-->
+        <header class="header fixed-top clearfix">
+            <!--logo start-->
+            <div class="brand">
 
-							<div class="head-info">
-								<div class="close"> </div>
-							</div>
-							<div class="clear"> </div>
-							<form>
-								<input type="text" class="text" placeholder="E-mail" >
-									<div class="key">
-								<input type="password" placeholder="Senha">
-									</div>
-							</form>
-							<div class="signin">
-								<input type="submit" value="Entrar" >
-							</div>
-						</div>
-					  </div>
-				 </li>
-			  </ul>
-		  </div>
-	</div>
-	</div>
-	<!-- conteudo -->
-		<div class="content">
-			<div class="welcome-section">
-				<div class="container">
-					<div class="col-md-6 welcome-grid text-center">
-						<h3>ADOTPET</h3>
-						<h5>Duis autem vel eum iriure dolor in hendrerit in vulputa</h5>
-						<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. </p>
-						<p>Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum. Mirum est notare quam littera gothica, quam nunc putamus parum claram Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum. littera gothica.</p>
-					</div>
-					<div class="col-md-6 images">
-						<?php echo $this->Html->image('intro-cat-dog.jpg', array('class' => 'img-responsive')); ?>
-						<div class="clearfix"></div>
-					</div>
-					<div class="clearfix"></div>
-				</div>
-			</div>
-			<div class="about-section text-center">
-				<div class="container">
-					<h2>Por que adotar?</h2>
-					<div class="col-md-6 about-section-grid text-left">
-						<h4>Mirum est notare quam littera </h4>
-						<p>Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio</p>
-					</div>
-					<div class="col-md-6 about-section-grid text-left">
-						<h4>Mirum est notare quam littera </h4>
-						<p>Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio</p>
-					</div>
-					<div class="clearfix"></div>
-					<video controls src="video/propaganda.mp4" width="100%" height="auto"></video>
-				</div>
-			</div>
-			<div class="textimonials-section text-center">
-				<div class="container">
-					<?php echo $this->Html->image('t.png'); ?>
-					<h5>Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum. Mirum est notare quam littera gothica, quam nunc putamus parum claram</h5>
-					<p>Ana Clara que adotou Rex</p>
-					<a href="" class="btn btn-1 btn-1d">Veja mais pessoas felizes</a>
-				</div>
-			</div>
-		</div>
-	<!-- footer -->
-	<div class="footer">
-		<div class="container">
-			<div class="col-md-5 contact-section">
-				<h4>Entre em contato</h4>
-					<input type="text" class="text" placeholder="Nome">
-					<input type="text" class="text" placeholder="E-mail">
-					<textarea placeholder="Digite sua mensagem..."></textarea>
-					<input type="submit" value="ENVIAR">
-			</div>
-			<div class="col-md-7 follow-us">
-				<h4>Conecte-se com a gente!</h4>
-				<div class="social-icons">
-					<i class="facebook"></i>
-					<i class="twitter"></i>
-					<i class="pinterest"></i>
-					<i class="googlepluse"></i>
-				</div>
-				<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor</p>
-				<div class="copyright">
-					<p>Copyright  <a href="#">ADOTPET</a></p>
-				</div>
-			</div>
-			<div class="clearfix"></div>
-		</div>
-	</div>
+                <a href="javascript:;">
+                    <span class="logo-nf">NFCHURCH</span>
+                </a>
+                <div class="sidebar-toggle-box">
+                    <div class="fa fa-bars"></div>
+                </div>
+            </div>
+            <!--logo end-->
 
-	<script type="text/javascript">
-		$(document).ready(function() {
-			/*
-			var defaults = {
-				  containerID: 'toTop', // fading element id
-				containerHoverID: 'toTopHover', // fading element hover id
-				scrollSpeed: 1200,
-				easingType: 'linear'
-			 };
-			*/
+            <div class="nav notify-row" id="top_menu">
+                <!--  notification start -->
+                <ul class="nav top-menu">
+                    <!-- settings start -->
+                    
+                    <!-- settings end -->
+                    <!-- inbox dropdown start-->
+                    <!--<li id="header_inbox_bar" class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <i class="fa fa-envelope-o"></i>
+                            <span class="badge bg-important">4</span>
+                        </a>
+                        <ul class="dropdown-menu extended inbox">
+                            <li>
+                                <p class="red">Você tem 4 Mensagens</p>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="photo"><?php echo $this->Html->image('../images/avatar-mini.jpg'); ?></span>
+                                    <span class="subject">
+                                        <span class="from">Jonathan Smith</span>
+                                        <span class="time">Just now</span>
+                                    </span>
+                                    <span class="message">
+                                        Hello, this is an example msg.
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="photo"><?php echo $this->Html->image('../images/avatar-mini-2.jpg'); ?></span>
+                                    <span class="subject">
+                                        <span class="from">Jane Doe</span>
+                                        <span class="time">2 min ago</span>
+                                    </span>
+                                    <span class="message">
+                                        Nice admin template
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="photo"><?php echo $this->Html->image('../images/avatar-mini-3.jpg'); ?></span>
+                                    <span class="subject">
+                                        <span class="from">Tasi sam</span>
+                                        <span class="time">2 days ago</span>
+                                    </span>
+                                    <span class="message">
+                                        This is an example msg.
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="photo"><?php echo $this->Html->image('../images/avatar-mini-4.jpg'); ?></span>
+                                    <span class="subject">
+                                        <span class="from">Mr. Perfect</span>
+                                        <span class="time">2 hour ago</span>
+                                    </span>
+                                    <span class="message">
+                                        Hi there, its a test
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">Ver Todas as Mensagens</a>
+                            </li>
+                        </ul>
+                    </li>-->
+                    <!-- inbox dropdown end -->
+                    <!-- notification dropdown start-->
+                    <li id="header_notification_bar" class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
 
-			$().UItoTop({ easingType: 'easeOutQuart' });
+                            <i class="fa fa-bell-o"></i>
+                            <span class="badge bg-warning"></span>
+                        </a>
+                        <ul class="dropdown-menu extended notification">
+                            <!--<li>
+                                <p>Notificações</p>
+                            </li>
+                            <li>
+                                <div class="alert alert-info clearfix">
+                                    <span class="alert-icon"><i class="fa fa-bolt"></i></span>
+                                    <div class="noti-info">
+                                        <a href="#"> Server #1 overloaded.</a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="alert alert-danger clearfix">
+                                    <span class="alert-icon"><i class="fa fa-bolt"></i></span>
+                                    <div class="noti-info">
+                                        <a href="#"> Server #2 overloaded.</a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="alert alert-success clearfix">
+                                    <span class="alert-icon"><i class="fa fa-bolt"></i></span>
+                                    <div class="noti-info">
+                                        <a href="#"> Server #3 overloaded.</a>
+                                    </div>
+                                </div>
+                            </li>-->
 
-		});
-	</script>
-	<a href="#" id="toTop" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
+                        </ul>
+                    </li>
+                    <!-- notification dropdown end -->
+                </ul>
+                <!--  notification end -->
+            </div>
+            <div class="top-nav clearfix">
+                <!--search & user info start-->
+                <ul class="nav pull-right top-menu">
+                    <!--<li>
+                        <input type="text" class="form-control search" placeholder=" Procurar">
+                    </li>-->
+                    <!-- user login dropdown start-->
+                    <li class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <?php 
+                                $profile = FULL_BASE_URL.$this->webroot.'files/profile/'.$this->Session->read('User.id').'.jpg';
+                                if (!file_exists(WWW_ROOT.'files/profile/'.$this->Session->read('User.id').'.jpg')) {
+                                    echo $this->Html->image('default_large.png', array('width' => 33));
+                                } else {
+                                    echo $this->Html->image($profile, array('width' => 33));
+                                }
+                            ?>
+                            <span class="username"><?php echo $this->Session->read('User.nome'); ?></span>
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu extended logout">
+                            <!--<li><a href="#"><i class=" fa fa-suitcase"></i>Perfil</a></li>
+                            <li><a href="#"><i class="fa fa-cog"></i> Configurações</a></li>-->
+                            <li><a href="<?php echo $this->Html->url(array('plugin' => '', 'controller' => 'users', 'action' => 'logout')); ?>"><i class="fa fa-key"></i> Sair</a></li>
+                        </ul>
+                    </li>
+                    <!-- user login dropdown end -->
+                </ul>
+                <!--search & user info end-->
+            </div>
+        </header>
+        <!--header end-->
+        <!--sidebar start-->
+        <aside>
+            <div id="sidebar" class="nav-collapse">
+                <!-- sidebar menu start-->
+                <ul class="sidebar-menu" id="nav-accordion">
+                    <li>
+                        <a class="active" href="<?php echo $this->Html->url('/'); ?>">
+                            <i class="fa fa-dashboard"></i>
+                            <span>Painel Inicial</span>
+                        </a>
+                    </li>
+                    <li class="sub-menu">
+                        <a href="javascript:;">
+                            <i class="fa fa-archive"></i>
+                            <span>Parametros</span>
+                        </a>
+                        <ul class="sub">
+                            <li><a onclick="ajaxload('<?php echo $this->Html->url(array('plugin' => '', 'controller' => 'users', 'action' => 'permissao_padrao')); ?>');" href="javascript:;" >Permissões Padrão</a></li>
+                        </ul>
+                    </li>
+                    <li class="sub-menu">
+                        <a href="javascript:;">
+                            <i class="fa fa-archive"></i>
+                            <span>Secretaria</span>
+                        </a>
+                        <ul class="sub">
+                            <li><a onclick="ajaxload('<?php echo $this->Html->url(array('plugin' => '', 'controller' => 'users', 'action' => 'index')); ?>');" href="javascript:;" >Usuários</a></li>
+                            <li><a onclick="ajaxload('<?php echo $this->Html->url(array('plugin' => 'secretaria', 'controller' => 'atas', 'action' => 'index')); ?>');" href="javascript:;" >Atas</a></li>
+                            <li><a onclick="ajaxload('<?php echo $this->Html->url(array('plugin' => 'secretaria', 'controller' => 'membros', 'action' => 'index')); ?>');" href="javascript:;" >Membros</a></li>
+                            <li><a onclick="ajaxload('<?php echo $this->Html->url(array('plugin' => 'secretaria', 'controller' => 'congregacaos', 'action' => 'index')); ?>');" href="javascript:;" >Congregações</a></li>
+                            <li><a onclick="ajaxload('<?php echo $this->Html->url(array('plugin' => 'secretaria', 'controller' => 'visitantes', 'action' => 'index')); ?>');" href="javascript:;" >Visitantes</a></li>
+                            <li><a href="javascript:;" onclick="ajaxload('<?php echo $this->Html->url(array('plugin' => 'secretaria', 'controller' => 'profissaos', 'action' => 'index')); ?>');">Profissões</a></li>
+                            <li><a href="javascript:;" onclick="ajaxload('<?php echo $this->Html->url(array('plugin' => 'secretaria', 'controller' => 'departamentos', 'action' => 'index')); ?>');">Departamentos</a></li>
+                            <li><a href="javascript:;" onclick="ajaxload('<?php echo $this->Html->url(array('plugin' => 'secretaria', 'controller' => 'cargos', 'action' => 'index')); ?>');">Cargos</a></li>
+                            <li><a href="javascript:;" onclick="ajaxload('<?php echo $this->Html->url(array('plugin' => 'secretaria', 'controller' => 'calendarios', 'action' => 'index')); ?>');">Eventos</a></li>
+                            <li><a href="javascript:;">
+                                    <i class="fa fa-bar-chart"></i>
+                                    <span>Relatórios</span>
+                                </a>
+                                <ul class="sub de-sub">
+                                    <li><a onclick="ajaxload('<?php echo $this->Html->url(array('plugin' => 'secretaria', 'controller' => 'relatorios', 'action' => 'membros')); ?>');" href="javascript:;">Membros</a></li>
+                                    <li><a onclick="ajaxload('<?php echo $this->Html->url(array('plugin' => 'secretaria', 'controller' => 'relatorios', 'action' => 'mapa_membros')); ?>');" href="javascript:;">Mapa</a></li>
+                                    <li><a onclick="ajaxload('<?php echo $this->Html->url(array('plugin' => 'secretaria', 'controller' => 'relatorios', 'action' => 'grafico_membros')); ?>');" href="javascript:;">Gráfico de Novos Membros</a></li>
+                                    <li><a onclick="ajaxload('<?php echo $this->Html->url(array('plugin' => 'secretaria', 'controller' => 'relatorios', 'action' => 'usuarios')); ?>');" href="javascript:;">Usuários</a></li>
+                                    <li><a onclick="ajaxload('<?php echo $this->Html->url(array('plugin' => 'secretaria', 'controller' => 'relatorios', 'action' => 'visitantes')); ?>');" href="javascript:;">Visitantes</a></li>
+                                    <li><a onclick="ajaxload('<?php echo $this->Html->url(array('plugin' => 'secretaria', 'controller' => 'relatorios', 'action' => 'cargos')); ?>');" href="javascript:;">Cargos</a></li>
+                                    <li><a onclick="ajaxload('<?php echo $this->Html->url(array('plugin' => 'secretaria', 'controller' => 'relatorios', 'action' => 'profissao')); ?>');" href="javascript:;">Profissões</a></li>
+                                    <li><a onclick="ajaxload('<?php echo $this->Html->url(array('plugin' => 'secretaria', 'controller' => 'relatorios', 'action' => 'eventos')); ?>');" href="javascript:;">Eventos</a></li>
+                                    <li><a onclick="ajaxload('<?php echo $this->Html->url(array('plugin' => 'secretaria', 'controller' => 'relatorios', 'action' => 'departamentos')); ?>');" href="javascript:;">Departamentos</a></li>
+                                    <li><a onclick="ajaxload('<?php echo $this->Html->url(array('plugin' => 'secretaria', 'controller' => 'relatorios', 'action' => 'congregacoes')); ?>');" href="javascript:;">Congregações</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <!--<li class="sub-menu">
+                        <a href="javascript:;">
+                            <i class="fa fa-dollar"></i>
+                            <span>Financeiro</span>
+                        </a>
+                        <ul class="sub">
+                            <li><a href="">Lançamentos</a></li>
+                            <li><a href="">Cadastros</a></li>
+                            <li><a href="">Relatórios</a></li>
+                            <li><a href="">Gráficos</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="fontawesome.html">
+                            <i class="fa fa-bullhorn"></i>
+                            <span>Ícones para desenvolvimento </span>
+                        </a>
+                    </li>-->
+                    <li class="sub-menu">
+                        <a href="javascript:;">
+                            <i class="fa fa-sitemap"></i>
+                            <span>Patrimônios</span>
+                        </a>
+                        <ul class="sub">
+                            <li><a onclick="ajaxload('<?php echo $this->Html->url(array('plugin' => 'patrimonio', 'controller' => 'bens', 'action' => 'index')); ?>');" href="javascript:;" >Bens</a></li>
+                            <li><a href="javascript:;">
+                                    <i class="fa fa-bar-chart"></i>
+                                    <span>Relatórios</span>
+                                </a>
+                                <ul class="sub de-sub">
+                                    <li><a onclick="ajaxload('<?php echo $this->Html->url(array('plugin' => 'patrimonio', 'controller' => 'relatorios', 'action' => 'bens')); ?>');" href="javascript:;">Bens</a></li>
+                                    <li><a onclick="ajaxload('<?php echo $this->Html->url(array('plugin' => 'patrimonio', 'controller' => 'relatorios', 'action' => 'movimentacao_bens')); ?>');" href="javascript:;">Movimentação Patrimônio</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="sub-menu">
+                        <a href="javascript:;">
+                            <i class="fa fa-book"></i>
+                            <span>Biblioteca</span>
+                        </a>
+                        <ul class="sub">
+                            <li><a onclick="ajaxload('<?php echo $this->Html->url(array('plugin' => 'biblioteca', 'controller' => 'itens', 'action' => 'index')); ?>');" href="javascript:;" >Itens</a></li>
+                            <li><a onclick="ajaxload('<?php echo $this->Html->url(array('plugin' => 'biblioteca', 'controller' => 'itens', 'action' => 'consulta')); ?>');" href="javascript:;" >Consulta</a></li>
+                            <li><a href="javascript:;">
+                                    <i class="fa fa-bar-chart"></i>
+                                    <span>Relatórios</span>
+                                </a>
+                                <ul class="sub de-sub">
+                                    <li><a onclick="ajaxload('<?php echo $this->Html->url(array('plugin' => 'biblioteca', 'controller' => 'relatorios', 'action' => 'itens')); ?>');" href="javascript:;">Itens</a></li>
+                                    <li><a onclick="ajaxload('<?php echo $this->Html->url(array('plugin' => 'biblioteca', 'controller' => 'relatorios', 'action' => 'emprestimos')); ?>');" href="javascript:;">Empréstimos</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <!--<li class="sub-menu">
+                        <a href="javascript:;">
+                            <i class="fa fa-group"></i>
+                            <span>Recursos Humanos</span>
+                        </a>
+                        <ul class="sub">
+                            <li><a href="form_component.html">Form Elements</a></li>
+                            <li><a href="advanced_form.html">Advanced Components</a></li>
+                            <li><a href="form_wizard.html">Form Wizard</a></li>
+                            <li><a href="form_validation.html">Form Validation</a></li>
+                            <li><a href="file_upload.html">Muliple File Upload</a></li>
+                            <li><a href="dropzone.html">Dropzone</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="mail.html">
+                            <i class="fa fa-envelope"></i>
+                            <span>Mensagens </span>
+                        </a>
+                    </li>
+                    <li class="sub-menu">
+                        <a href="javascript:;">
+                            <i class=" fa fa-book"></i>
+                            <span>Escola Bíblica</span>
+                        </a>
+                        <ul class="sub">
+                            <li><a href="">Classes</a></li>
+                            <li><a href="">Professores</a></li>
+                            <li><a href="">Alunos</a></li>
+                            <li><a href="">Relatórios</a></li>
+                        </ul>
+                    </li>-->
+                </ul>
+                <!-- sidebar menu end-->
+            </div>
+        </aside>
+        <!--sidebar end-->
+        <!--main content start-->
+        <section id="main-content">
+            <section class="wrapper">
+                <?php echo $this->fetch('content'); ?>
+            </section>
+        </section>
+    </section>
+    <!--main content end-->
+</section>
+<!-- Placed js at the end of the document so the pages load faster -->
+<!--Core js-->
+<?php
 
+    /*
+     * Responsável por carregar todos os scripts js básicos do site
+     * Todo script que não for específico por alguma coisa, carregar aqui
+     */
+    echo $this->Html->script(array(
+        'bootstrap.min.js',
+        '../css/assets/jquery-ui/jquery-ui-1.10.1.custom.min.js',        
+        'accordion-menu/jquery.dcjqaccordion.2.7.js',
+        'scrollTo/jquery.scrollTo.min.js',
+        'nicescroll/jquery.nicescroll.js',
+        '../css/assets/jQuery-slimScroll-1.3.0/jquery.slimscroll.js',
+        '../css/assets/skycons/skycons',
+        '../css/assets/jquery.scrollTo/jquery.scrollTo.js',
+        'jquery.easing.min.js',
+        '../css/assets/calendar/clndr',
+        '../css/assets/calendar/moment-2.2.1',
+        'calendar/evnt.calendar.init',
+        '../css/assets/jvector-map/jquery-jvectormap-1.2.2.min',
+        '../css/assets/jvector-map/jquery-jvectormap-us-lcc-en',
+        '../css/assets/gauge/gauge',
+        '../css/assets/css3clock/js/script',
+        '../css/assets/sparkline/jquery.sparkline.js', 
+        '../css/assets/morris-chart/morris',
+        '../css/assets/morris-chart/raphael-min',
+        '../css/assets/flot-chart/jquery.flot.js',
+        '../css/assets/flot-chart/jquery.flot.time.js',
+        '../css/assets/flot-chart/jquery.flot.tooltip.min.js',
+        '../css/assets/flot-chart/jquery.flot.resize.js',
+        '../css/assets/flot-chart/jquery.flot.pie.resize.js',
+        '../css/assets/flot-chart/jquery.flot.animator.min',
+        '../css/assets/flot-chart/jquery.flot.growraf',
+        'dashboard',
+        '../css/assets/fullcalendar/fullcalendar/fullcalendar.min.js',
+        'custom-select/jquery.customSelect.min',
+        '../css/assets/gritter/js/jquery.gritter.js',
+        'toggle-button/toggle-init.js',
+        'accordion-menu/jquery.dcjqaccordion.2.7', 
+        '../css/assets/bootstrap-inputmask/bootstrap-inputmask.min.js', 
+        '../css/assets/jquery-tags-input/jquery.tagsinput.js',
+        '../css/assets/easypiechart/jquery.easypiechart.js',
+        '../css/assets/bootstrap-switch-master/build/js/bootstrap-switch.js',
+        '../css/assets/fuelux/js/spinner.min.js',
+        '../css/assets/bootstrap-fileupload/bootstrap-fileupload.js',
+        '../css/assets/bootstrap-wysihtml5/wysihtml5-0.3.0.js',
+        '../css/assets/bootstrap-wysihtml5/bootstrap-wysihtml5.js',
+        '../css/assets/bootstrap-datepicker/js/bootstrap-datepicker.js',
+        '../css/assets/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js',
+        '../css/assets/bootstrap-daterangepicker/moment.min.js',
+        '../css/assets/bootstrap-daterangepicker/daterangepicker.js',
+        '../css/assets/bootstrap-timepicker/js/bootstrap-timepicker.js',
+        'gritter/gritter.js',
+        'pace.js', 
+        'jquery.form.js',
+        'select2',
+        'select-init',
+        'bootstrap-switch.js',
+        '../css/assets/jquery-multi-select/js/jquery.multi-select.js',
+        '../css/assets/jquery-multi-select/js/jquery.quicksearch.js',
+        'underscore-min.js',
+        //'underscore-min.map.js',
+        '../css/assets/bootstrap-colorpicker/js/bootstrap-colorpicker.js',
+        'advanced-form/advanced-form.js',
+        'calendar/external-dragging-calendar.js',
+        'mask',
+        'scripts',
+        ));
+
+        echo $this->element('modal/modalAddItem');
+?>
+
+<script>
+    $(document).ready(function(){
+        setTimeout(function(){
+            Pace.stop();
+        }, 2000);
+    }); 
+    
+    window.$zopim||(function(d,s){var z=$zopim=function(c){z._.push(c)},$=z.s=
+    d.createElement(s),e=d.getElementsByTagName(s)[0];z.set=function(o){z.set.
+    _.push(o)};z._=[];z.set._=[];$.async=!0;$.setAttribute('charset','utf-8');
+    $.src='//v2.zopim.com/?1OdtmNOOtpNZPfqQTK1znRpyDbULmjGI';z.t=+new Date;$.
+    type='text/javascript';e.parentNode.insertBefore($,e)})(document,'script');
+    $(document).ready(function(){
+        $(".dropdown-toggle").on('click', function() {
+            $zopim.livechat.window.hide();
+            $('[__jx__id], embed#__zopnetworkswf').style('z-index', '0');
+        });
+    });
+
+    $zopim(function() {
+        <?php 
+            $nomeChat = $this->Session->read('Auth.User.nome').' - '.$this->Session->read('Auth.User.username');
+        ?>
+        $zopim.livechat.setName('NFCHURCH - <?php echo $nomeChat; ?>');
+        $zopim.livechat.setEmail('<?php echo $this->Session->read('Auth.User.username'); ?>');
+    });
+
+    $(document).ready(function(){
+        setTimeout(function(){
+            Pace.stop();
+        }, 5000);
+    });
+
+</script>
+<!--[if lte IE 8]><script language="javascript" type="text/javascript" src="js/flot-chart/excanvas.min.js"></script><![endif]-->
+<!--script for this page-->
+<a href="javascript:;" onclick="ajaxload(urlLoc);" style="display: none;" id="linkatual"></a>
 </body>
 </html>
-
-<?php // echo $this->Session->flash(); ?>
-<?php // echo $this->fetch('content'); ?>

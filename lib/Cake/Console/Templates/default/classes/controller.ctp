@@ -74,9 +74,7 @@ class <?php echo $controllerName; ?>Controller extends <?php echo $plugin; ?>App
 		echo ");\n\n";
 	endif;
 
-	if (!empty($actions)) {
-		echo trim($actions) . "\n";
-	}
+	echo trim($actions);
 
 endif; ?>
 }

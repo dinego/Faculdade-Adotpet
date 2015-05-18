@@ -15,6 +15,9 @@
  * @link          http://book.cakephp.org/2.0/en/development/testing.html CakePHP(tm) Tests
  * @package       Cake.Test.Fixture
  * @since         CakePHP(tm) v 1.2.0.5669
+ * @version       $Revision$
+ * @modifiedby    $LastChangedBy$
+ * @lastmodified  $Date$
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 /**
@@ -27,7 +30,7 @@ class TranslateWithPrefixFixture extends CakeTestFixture {
 /**
  * table property
  *
- * @var string
+ * @var string 'i18n'
  */
 	public $table = 'i18n_translate_with_prefixes';
 

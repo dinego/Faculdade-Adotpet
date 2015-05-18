@@ -30,7 +30,6 @@ class CakeEventTest extends CakeTestCase {
  * Tests the name() method
  *
  * @return void
- * @triggers fake.event
  */
 	public function testName() {
 		$event = new CakeEvent('fake.event');
@@ -41,8 +40,6 @@ class CakeEventTest extends CakeTestCase {
  * Tests the subject() method
  *
  * @return void
- * @triggers fake.event $this
- * @triggers fake.event
  */
 	public function testSubject() {
 		$event = new CakeEvent('fake.event', $this);
@@ -56,7 +53,6 @@ class CakeEventTest extends CakeTestCase {
  * Tests the event propagation stopping property
  *
  * @return void
- * @triggers fake.event
  */
 	public function testPropagation() {
 		$event = new CakeEvent('fake.event');
@@ -69,7 +65,6 @@ class CakeEventTest extends CakeTestCase {
  * Tests that it is possible to get/set custom data in a event
  *
  * @return void
- * @triggers fake.event $this, array('some' => 'data')
  */
 	public function testEventData() {
 		$event = new CakeEvent('fake.event', $this, array('some' => 'data'));
@@ -80,7 +75,6 @@ class CakeEventTest extends CakeTestCase {
  * Tests that it is possible to get the name and subject directly
  *
  * @return void
- * @triggers fake.event $this
  */
 	public function testEventDirectPropertyAccess() {
 		$event = new CakeEvent('fake.event', $this);

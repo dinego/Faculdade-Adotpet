@@ -36,7 +36,7 @@ App::uses('CakeRequest', 'Network');
  *
  * ### Usage
  *
- * ```
+ * {{{
  * class ExampleController extends AppController {
  *		public function download() {
  *			$this->viewClass = 'Media';
@@ -50,10 +50,10 @@ App::uses('CakeRequest', 'Network');
  *			$this->set($params);
  *		}
  * }
- * ```
+ * }}}
  *
  * @package       Cake.View
- * @deprecated 3.0.0 Deprecated since version 2.3, use CakeResponse::file() instead
+ * @deprecated Deprecated since version 2.3, use CakeResponse::file() instead
  */
 class MediaView extends View {
 
@@ -62,7 +62,7 @@ class MediaView extends View {
  *
  * @param string $view Not used
  * @param string $layout Not used
- * @return void
+ * @return boolean
  */
 	public function render($view = null, $layout = null) {
 		$name = $download = $id = $modified = $path = $cache = $mimeType = $compress = null;
@@ -93,6 +93,8 @@ class MediaView extends View {
 		if ($compress) {
 			$this->response->compress();
 		}
+		$this->response->send();
+		return true;
 	}
 
 }

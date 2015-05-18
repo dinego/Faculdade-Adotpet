@@ -56,7 +56,7 @@ class CakeSocketTest extends CakeTestCase {
 		$this->assertSame($config, array(
 			'persistent'	=> false,
 			'host'			=> 'localhost',
-			'protocol'		=> 'tcp',
+			'protocol'		=> getprotobyname('tcp'),
 			'port'			=> 80,
 			'timeout'		=> 30
 		));
@@ -71,7 +71,7 @@ class CakeSocketTest extends CakeTestCase {
 
 		$config['host'] = 'www.cakephp.org';
 		$config['port'] = 23;
-		$config['protocol'] = 'udp';
+		$config['protocol'] = 17;
 
 		$this->assertSame($this->Socket->config, $config);
 	}
@@ -118,7 +118,7 @@ class CakeSocketTest extends CakeTestCase {
  *
  * @dataProvider invalidConnections
  * @expectedException SocketException
- * @return void
+ * return void
  */
 	public function testInvalidConnection($data) {
 		$this->Socket->config = array_merge($this->Socket->config, $data);

@@ -30,20 +30,27 @@ App::uses('Controller', 'Controller');
  * @package		app.Controller
  * @link		http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
-// app/Controller/AppController.php
 class AppController extends Controller {
-    //...
-
-    public $components = array(
-        'Session',
-        'Auth' => array(
-            'loginRedirect' => array('controller' => 'posts', 'action' => 'index'),
-            'logoutRedirect' => array('controller' => 'pages', 'action' => 'display', 'home'),
-            'authorize' => array('Controller')
-        )
+	public $components = array(
+		'Session',
+        'Auth'
     );
+    public $pluginT;
+	public $controllerT;
+	public $actionT;
 
-    function beforeFilter() {
-        $this->Auth->allow('index', 'view', 'add');
-    }
+    public function beforeFilter() {
+    	umask(0);
+        if ($this->request->isAjax()) {
+            $this->layout = false;
+        }
+    	$this->Auth->allow(array('login', 'logout', 'teste', 'fblogin', 'addUser'));
+
+    	
+
+    	$this->loadModel('User');
+    	$user = $this->User->read(null, $this->Session->read('Auth.User.id'));
+    	
+    	$this->Session->write('User', $user['User']);
+	}
 }

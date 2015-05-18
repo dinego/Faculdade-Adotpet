@@ -1,5 +1,7 @@
 <?php
 /**
+ * CacheHelper helps create full page view caching.
+ *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -22,10 +24,8 @@ App::uses('AppHelper', 'View/Helper');
  * When using CacheHelper you don't call any of its methods, they are all automatically
  * called by View, and use the $cacheAction settings set in the controller.
  *
- * @package Cake.View.Helper
+ * @package       Cake.View.Helper
  * @link http://book.cakephp.org/2.0/en/core-libraries/helpers/cache.html
- * @deprecated This class will be removed in 3.0. You should use a separate response cache
- * like Varnish instead.
  */
 class CacheHelper extends AppHelper {
 
@@ -48,14 +48,14 @@ class CacheHelper extends AppHelper {
 /**
  * Counter used for counting nocache section tags.
  *
- * @var int
+ * @var integer
  */
 	protected $_counter = 0;
 
 /**
  * Is CacheHelper enabled? should files + output be parsed.
  *
- * @return bool
+ * @return boolean
  */
 	protected function _enabled() {
 		return $this->_View->cacheAction && (Configure::read('Cache.check') === true);
@@ -64,7 +64,7 @@ class CacheHelper extends AppHelper {
 /**
  * Parses the view file and stores content for cache file building.
  *
- * @param string $viewFile View file name.
+ * @param string $viewFile
  * @param string $output The output for the file.
  * @return string Updated content.
  */
@@ -77,7 +77,7 @@ class CacheHelper extends AppHelper {
 /**
  * Parses the layout file and stores content for cache file building.
  *
- * @param string $layoutFile Layout file name.
+ * @param string $layoutFile
  * @return void
  */
 	public function afterLayout($layoutFile) {
@@ -109,7 +109,6 @@ class CacheHelper extends AppHelper {
  * @param string $out output to cache
  * @return string view output
  * @link http://book.cakephp.org/2.0/en/core-libraries/helpers/cache.html
- * @throws Exception If debug mode is enabled and writing to cache file fails.
  */
 	public function cache($file, $out) {
 		$cacheTime = 0;
@@ -121,7 +120,7 @@ class CacheHelper extends AppHelper {
 			$index = null;
 
 			foreach ($keys as $action) {
-				if ($action === $this->request->params['action']) {
+				if ($action == $this->request->params['action']) {
 					$index = $action;
 					break;
 				}
@@ -134,7 +133,7 @@ class CacheHelper extends AppHelper {
 			$options = $cacheAction;
 			if (isset($cacheAction[$index])) {
 				if (is_array($cacheAction[$index])) {
-					$options = $cacheAction[$index] + array('duration' => 0, 'callbacks' => false);
+					$options = array_merge(array('duration' => 0, 'callbacks' => false), $cacheAction[$index]);
 				} else {
 					$cacheTime = $cacheAction[$index];
 				}
@@ -154,10 +153,6 @@ class CacheHelper extends AppHelper {
 			try {
 				$this->_writeFile($cached, $cacheTime, $useCallbacks);
 			} catch (Exception $e) {
-				if (Configure::read('debug')) {
-					throw $e;
-				}
-
 				$message = __d(
 					'cake_dev',
 					'Unable to write view cache file: "%s" for "%s"',
@@ -271,9 +266,8 @@ class CacheHelper extends AppHelper {
  *
  * @param string $content view content to write to a cache file.
  * @param string $timestamp Duration to set for cache file.
- * @param bool $useCallbacks Whether to include statements in cached file which
- *   run callbacks.
- * @return bool success of caching view.
+ * @param boolean $useCallbacks
+ * @return boolean success of caching view.
  */
 	protected function _writeFile($content, $timestamp, $useCallbacks = false) {
 		$now = time();

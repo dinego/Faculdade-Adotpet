@@ -137,24 +137,20 @@ class ApiShell extends AppShell {
 	}
 
 /**
- * Gets the option parser instance and configures it.
+ * Get and configure the optionparser.
  *
  * @return ConsoleOptionParser
  */
 	public function getOptionParser() {
 		$parser = parent::getOptionParser();
-
-		$parser->description(
-			__d('cake_console', 'Lookup doc block comments for classes in CakePHP.')
-		)->addArgument('type', array(
+		$parser->addArgument('type', array(
 			'help' => __d('cake_console', 'Either a full path or type of class (model, behavior, controller, component, view, helper)')
 		))->addArgument('className', array(
 			'help' => __d('cake_console', 'A CakePHP core class name (e.g: Component, HtmlHelper).')
 		))->addOption('method', array(
 			'short' => 'm',
 			'help' => __d('cake_console', 'The specific method you want help on.')
-		));
-
+		))->description(__d('cake_console', 'Lookup doc block comments for classes in CakePHP.'));
 		return $parser;
 	}
 

@@ -1,5 +1,7 @@
 <?php
 /**
+ *
+ *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -32,8 +34,3 @@
 	<strong><?php echo __d('cake_dev', 'Notice'); ?>: </strong>
 	<?php echo __d('cake_dev', 'If you want to customize this error message, create %s', APP_DIR . DS . 'View' . DS . 'Errors' . DS . 'fatal_error.ctp'); ?>
 </p>
-<?php
-if (extension_loaded('xdebug')) {
-	xdebug_print_function_stack();
-}
-?>
